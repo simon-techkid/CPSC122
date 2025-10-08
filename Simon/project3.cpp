@@ -56,10 +56,10 @@ void keyGen(string keyFile) {
 	unsigned seed = time(NULL);
 	srand(seed);
 
-	int coprimes[12] = {1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25};
+	int legalAlpha[12] = {1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25};
 
 	// Randomly select an alpha from the list of coprimes
-	int alpha = coprimes[rand() % 12];
+	int alpha = legalAlpha[rand() % 12];
 
 	// Randomly generate beta in the range [0, 25]
 	int beta = rand() % ALPHABET_COUNT;
@@ -132,15 +132,9 @@ Input: character to be encrypted with key
 Output: returns encrypted character 
 */
 char encrypt(char ch, int alpha, int beta) {
-	if (isupper(ch)) {
-		int pos = ch - 'A';
-		pos = (alpha * pos + beta) % ALPHABET_COUNT;
-		ch = pos + 'A';
-	} else if (islower(ch)) {
-		int pos = ch - 'a';
-		pos = (alpha * pos + beta) % ALPHABET_COUNT;
-		ch = pos + 'a';
-	}
+	int pos = ch - 'A';
+	pos = (alpha * pos + beta) % ALPHABET_COUNT;
+	ch = pos + 'A';
 	return ch;
 }
 
@@ -150,16 +144,9 @@ Input: character to be decrypted with key
 Output: returns decrypted character 
 */
 char decrypt(char ch, int alpha, int beta, int MI[]) {
-	if (isupper(ch)) {
-		int pos = ch - 'A';
-		int alpha_inverse = MI[alpha];
-		pos = (alpha_inverse * (pos - beta + ALPHABET_COUNT)) % ALPHABET_COUNT;
-		ch = pos + 'A';
-	} else if (islower(ch)) {
-		int pos = ch - 'a';
-		int alpha_inverse = MI[alpha];
-		pos = (alpha_inverse * (pos - beta + ALPHABET_COUNT)) % ALPHABET_COUNT;
-		ch = pos + 'a';
-	}
+	int pos = ch - 'A';
+	int alpha_inverse = MI[alpha];
+	pos = (alpha_inverse * (pos - beta + ALPHABET_COUNT)) % ALPHABET_COUNT;
+	ch = pos + 'A';
 	return ch;
 }
