@@ -112,6 +112,7 @@ void control(int mode, string keyFile, string input, string output) {
 	char ch;
 	while (fin.get(ch)) {
 		if (isalpha(ch)) {
+			ch = toupper(ch);
 			if (mode == 1) {
 				ch = encrypt(ch, alpha, beta);
 			} else if (mode == 2) {
