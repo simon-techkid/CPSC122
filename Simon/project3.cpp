@@ -17,6 +17,9 @@ using namespace std;
 #define ALPHABET_COUNT 26
 
 void keyGen(string keyFile);
+char set_7th_bit(char);
+bool get_7th_bit(char);
+char get_all_but_7th_bit(char);
 char encrypt(char ch, int alpha, int beta);
 char decrypt(char ch, int alpha, int beta, int MI[]);
 void control(int mode, string keyFile, string input, string output);
@@ -112,12 +115,24 @@ void control(int mode, string keyFile, string input, string output) {
 
 	char ch;
 	while (fin.get(ch)) {
-		if (isalpha(ch)) {
+		if (mode == 1 && isalpha(ch)) {
+			bool originalUpper = isupper(ch);
 			ch = toupper(ch);
-			if (mode == 1) {
-				ch = encrypt(ch, alpha, beta);
-			} else if (mode == 2) {
+			ch = encrypt(ch, alpha, beta);
+			if (originalUpper) {
+				ch = set_7th_bit(ch);
+			}
+		} else if (mode == 2) {
+			bool originalUpper = get_7th_bit(ch);
+			char originalChar = ch;
+			ch = get_all_but_7th_bit(ch);
+			if (!isalpha(ch)) {
+				ch = originalChar;
+			} else {
 				ch = decrypt(ch, alpha, beta, MI);
+				if (!originalUpper) {
+					ch = tolower(ch);
+				}
 			}
 		}
 		fout.put(ch);
@@ -125,6 +140,21 @@ void control(int mode, string keyFile, string input, string output) {
 
 	fin.close();
 	fout.close();
+}
+
+// Set the 7th bit to 1
+inline char set_7th_bit(char c) {
+    return c | (1 << 7);
+}
+
+// Get the 7th bit as a boolean
+inline bool get_7th_bit(char c) {
+    return (c & (1 << 7)) != 0;
+}
+
+// Returns the input char with the 7th bit cleared
+inline char get_all_but_7th_bit(char c) {
+    return c & ~(1 << 7);
 }
 
 /*
