@@ -1,1 +1,1 @@
-../E-Pointers/8-MyStr.cpp
+../../E-Pointers/8-MyStr.cpp
