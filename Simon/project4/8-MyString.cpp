@@ -3,7 +3,7 @@ using namespace std;
 
 #define NULL_TERMINATOR '\0'
 
-#include "8-MyStr.h"
+#include "8-MyString.h"
 
 MyString::MyString(char const* strIn) {
     int length = myStrLen(strIn);

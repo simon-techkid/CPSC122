@@ -6,7 +6,7 @@ Assignment: N/A
 Description: Program illustrates using class MyString 
 */
 
-#include "8-MyStr.h"
+#include "8-MyString.h"
 #include <iostream>
 using namespace std;
 
