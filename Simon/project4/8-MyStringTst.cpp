@@ -1,9 +1,11 @@
 /*
-Name: Paul De Palma
-Class: CPSC 122, Section 1
-Date Submitted: 9/22/2025
-Assignment: N/A 
-Description: Program illustrates using class MyString 
+ Name: Simon Field
+ Class: CPSC 122, Section 02
+ Date Submitted: October 10, 2025
+ Assignment: Project 4
+ Description: Program illustrates using class MyString.
+ Sources:
+  CPPReference, 10/9/2025, https://www.cplusplus.com/reference/cstring/?kw=cstring
 */
 
 #include "8-MyString.h"
