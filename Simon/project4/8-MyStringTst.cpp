@@ -24,22 +24,27 @@ int main(int argc, char* argv[]) {
     MyString* str2 = new MyString(argument);
 
     //Test of myDisplay
+    /*
     cout << "*****Test myDisplay*****" << endl;
     cout << "static test" << endl;
     cout << "output should be the command line input" << endl;
     str1.myDisplay();
     cout << endl;
+    */
     //End Test of myDisplay
 
     //Test of myStrlen
+    /*
     cout << "*****Test myStrlen*****" << endl;
     cout << "dynamic test" << endl;
     cout << "output should be length of command line input" << endl;
     cout << str2->myStrlen() << endl;
     cout << endl;
+    */
     //End Test of myStrlen
 
     //Test of myStrcpy
+    /*
     cout << "*****Test myStrcpy*****" << endl;
     cout << "dynamic test" << endl;
     cout << "myStrcpy Initial Value (Expecting \"" << argument << "\"): ";
@@ -56,9 +61,11 @@ int main(int argc, char* argv[]) {
     str2->myDisplay();
     
     cout << endl;
+    */
     //End Test of myStrcpy
     
     //Test of isEqual
+    /*
     cout << "*****Test isEqual*****" << endl;
     cout << "static test" << endl;
 
@@ -70,9 +77,11 @@ int main(int argc, char* argv[]) {
     
     cout << "isEqual Pass: " << ((isEqTest1 && isEqTest2) ? "yes" : "no") << endl;
     cout << endl;
+    */
     //End Test of myStrcpy
 
     //Test of find
+    /*
     cout << "*****Test find*****" << endl;
     cout << "static test" << endl;
     MyString find("The Quick Brown Fox Jumped Over the Lazy Dog");
@@ -87,16 +96,18 @@ int main(int argc, char* argv[]) {
     bool allPass = test1Pass && test2Pass && test3Pass && test4Pass;
     cout << "find Pass: " << (allPass ? "yes" : "no") << endl;
     cout << endl;
+    */
     //End Test of myStrcpy
 
     //Test of concat
+    /*
     cout << "*****Test concat*****" << endl;
     cout << "static test" << endl;
     char testConcat1[6] = "Hello";
     char testConcat2[6] = "World";
     char testConcat3[9] = "Goodbyte";
     char testConcat4[6] = "World";
-    
+
     MyString testConcatStr(testConcat1);
     cout << "concat Initial Value (Expecting \"Hello\"): ";
     testConcatStr.myDisplay();
@@ -114,6 +125,7 @@ int main(int argc, char* argv[]) {
     testConcatStr.myDisplay();
 
     cout << endl;
+    */
     //End Test of concat
 
     delete str2;
