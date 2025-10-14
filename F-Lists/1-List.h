@@ -1,14 +1,9 @@
-//A work in progress: 10/13
-
 /*
 Name: Paul De Palma
 Class: CPSC 122, Section 1
-Date Submitted: 10/11/2025 
+Date Submitted: 9/29/2025 
 Assignment: N/A 
-Description: Adds three new functions and a tail pointer to 1-list.h
-   List(List* LstIn), the copy constructor 
-   int InsertItem(int pos,itemType), a function that inserts a node at a particular position 
-   int DeleteItem(const itemType target), a function that deletes all items in a list
+Description: Program illustrates a simple linked list  
 */
 
 #ifndef LIST_H
@@ -38,12 +33,6 @@ class List
    List();
 
    /*
-   pre: lstIn points to a List 
-   post: Current list is a copy of lstIn 
-   */
-   List(List* lstIn);
-
-   /*
    pre: An instance of List exists.  This is the destructor function, automatically
         invoked in the case of a static declaration, explcitly invoked, using the delete
         key word, in the case of a dynamic declaration.	
@@ -70,8 +59,9 @@ class List
    post: Node pointed to by head is deleted 
    */
    void DeleteItemH();
-   
-   //General operations on List,  starting with the easiest  
+
+
+   //A few easy general functions  
    /*
    pre: an instance of List exists
    post: returns true if list is empty, false otherwise
@@ -89,36 +79,37 @@ class List
    post: contents of list nodes are displayed on subsequent lines, head to tail. 
    */
    void Print();
-  
+
    /*
    pre: an instance of List exists and is not empty
    post: returns the number of nodes in the list that stores target 
    */
-   int Find(itemType target) const;
+   int Find(itemType target);
+
+
+   //Tail-Related functions
+   /*
+   pre: an instance of List exists
+   post: node containing itemIn is at the tail of the list 
+   */
+   void PutItemT(itemType item);
 
    /*
-   pre:  an instance of List exists and is not empty 
-   post: deletes all nodes that store target.  Returns
-         the number of nodes deleted 
+   pre: an instance of List exists and is not empty
+   post: Returns the contents of the node at the tail of the list 
    */
-   int DeleteItem(itemType target);
+   itemType GetItemT();
 
    /*
-   pre:  an instance of List exists 
-   post: inserts a node anywhere in the list, along with its information, using this numbering scheme:
-         0 : Before the current head
-         1 : After the current head
-         2 : After the second node
-         ...
-         n : After the last node (where n is the number of the last node. If there are 4 nodes, n = 4) 
-         the number of nodes deleted 
+   pre: an instance of list exists and is not empty
+   post: Node at the tail of the list is deleted 
    */
-   void InsertItem(int pos,itemType);
+   void DeleteItemT();
 
+   
  private:
    int length;   //length of the list
    node* head;   //points to the first node on the list 
-   node* tail;   //points to the last node in the list
 };
 #endif
 
