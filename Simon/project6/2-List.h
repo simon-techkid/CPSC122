@@ -146,7 +146,7 @@ public:
         So if pose = 1, insert befor the head of the list.  
     post: inserts a node anywhere in the list
     */
-    void InsertItem(int pos,itemType itemIn);
+    void InsertItem(int pos, itemType itemIn);
 
 private:
     int length;   //length of the list
