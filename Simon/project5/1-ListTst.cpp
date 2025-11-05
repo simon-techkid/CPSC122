@@ -25,7 +25,7 @@ int main() {
     lst2->Print();
     cout << endl;
     // End Test
-
+    
     // Test GetLength and Print
     cout << "*****Test GetLength, Print*****" << endl;
     cout << "*****Dynamic Declaration*****" << endl;
@@ -33,16 +33,18 @@ int main() {
     cout << "Length (Expected: 5): " << lst2->GetLength() << endl;
     cout << endl;
     // End Test
-
+    
     // Test Find and Print
     cout << "*****Test Find*****" << endl;
     cout << "*****Dynamic Declaration*****" << endl;
+    lst2->PutItemH(4);
+    lst2->PutItemT(4);
     lst2->Print();
-    cout << "Find 4 (Expected: 0): " << lst2->Find(4) << endl;
+    cout << "Find 4 (Expected: 3): " << lst2->Find(4) << endl;
     cout << "Find 3 (Expected: 1): " << lst2->Find(3) << endl;
-    cout << "Find 2 (Expected: 2): " << lst2->Find(2) << endl;
-    cout << "Find 1 (Expected: 3): " << lst2->Find(1) << endl;
-    cout << "Find 0 (Expected: 4): " << lst2->Find(0) << endl;
+    cout << "Find 2 (Expected: 1): " << lst2->Find(2) << endl;
+    cout << "Find 1 (Expected: 1): " << lst2->Find(1) << endl;
+    cout << "Find 0 (Expected: 1): " << lst2->Find(0) << endl;
     cout << endl;
     // End Test
 
@@ -51,7 +53,7 @@ int main() {
     cout << "*****Dynamic Declaration*****" << endl;
     lst2->PutItemT(12);
     lst2->Print();
-    cout << "Find 12 (Expected: 5): " << lst2->Find(12) << endl;
+    cout << "Find 12 (Expected: 1): " << lst2->Find(12) << endl;
     cout << endl;
     // End Test
 
@@ -60,7 +62,7 @@ int main() {
     cout << "*****Dynamic Declaration*****" << endl;
     lst2->DeleteItemH();
     lst2->Print();
-    cout << "Find 4 (Expected: -1): " << lst2->Find(4) << endl;
+    cout << "Find 4 (Expected: 1): " << lst2->Find(4) << endl;
     cout << endl;
 
     // Test DeleteItemT, Find, and Print
@@ -68,7 +70,7 @@ int main() {
     cout << "*****Dynamic Declaration*****" << endl;
     lst2->DeleteItemT();
     lst2->Print();
-    cout << "Find 12 (Expected: -1): " << lst2->Find(12) << endl;
+    cout << "Find 12 (Expected: 0): " << lst2->Find(12) << endl;
     cout << endl;
     // End Test
 
@@ -77,7 +79,7 @@ int main() {
     cout << "*****Dynamic Declaration*****" << endl;
     itemType itemH = lst2->GetItemH();
     lst2->Print();
-    cout << "Find " << itemH << " (Expected: 0): " << lst2->Find(itemH) << endl;
+    cout << "Find " << itemH << " (Expected: 1): " << lst2->Find(itemH) << endl;
     cout << endl;
     // End Test
 
@@ -86,7 +88,7 @@ int main() {
     cout << "*****Dynamic Declaration*****" << endl;
     itemType itemT = lst2->GetItemT();
     lst2->Print();
-    cout << "Find " << itemT << " (Expected: 3): " << lst2->Find(itemT) << endl;
+    cout << "Find " << itemT << " (Expected: 1): " << lst2->Find(itemT) << endl;
     cout << endl;
     // End Test
 

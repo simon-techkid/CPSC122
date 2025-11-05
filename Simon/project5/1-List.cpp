@@ -83,17 +83,14 @@ int List::Find(itemType target) {
 
     // Walk through the list until the item matches the target
     node* cur = head;
-    int index = 0;
+    int count = 0;
     while (cur != nullptr) {
         itemType item = cur->item;
-        if (item == target) {
-            return index;
-        }
-        index++;
+        if (item == target) count++;
         cur = cur->next;
     }
 
-    return -1;
+    return count;
 }
 
 void List::PutItemT(itemType item) {
