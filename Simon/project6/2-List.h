@@ -152,6 +152,20 @@ private:
     int length;   //length of the list
     node* head;   //points to the first node on the list 
     node* tail;   //points to the last node in the list
+
+    /*
+    Desc: Helper function for DeleteItemT
+    pre: length of list > 1
+    post: returns the address of the node just before the node pointed to by the tail
+    */
+    node* PtrTo();
+
+    /*
+    Desc: deletes the node pointed to by the argument. Helper function for DeleteItem
+    pre: argument points to the node to be deleted
+    post: node pointed to by the argument has been deleted
+    */
+    void delNode(node* delPtA);
 };
 #endif
 

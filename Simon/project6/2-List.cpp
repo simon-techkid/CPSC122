@@ -12,15 +12,17 @@ List::List() {
     tail = nullptr;
 }
 
-List::List(List &LstIn) {
-    //Hint: Traverse LstIn. For each node, keep track of the position and the item.
-    //Use Inser (InsertItem(int pos,itemType itemIn) to add copy of what you've just read
-    //to the list.  If you wrote Insert correctly, it should keep track of the tail pointer
-
+List::List(List& LstIn) : List() {
+    node* cur = LstIn.head;
+    while (cur != nullptr) {
+        PutItemT(cur->item);
+        cur = cur->next;
+    }
 }
 
 //Destructor
 List::~List() {
+    cout << "Welcome to the Destructor" << endl;
     if (IsEmpty()) return;
     
     node* cur = head;
@@ -35,24 +37,50 @@ List::~List() {
     length = 0;
 }
 
+// 1-based position for user-friendliness.
+// Inserts node at a specific position.
 void List::InsertItem(int pos, itemType itemIn) {
-    if (IsEmpty() && (pos != 0 || pos != length)) return;
-    if (pos == 0) {
+    // Case 1: Inserting into an empty list.
+    // The only valid position is 1.
+    if (IsEmpty()) {
+        if (pos == 1) {
+            PutItemH(itemIn);
+        }
+        return;
+    }
+
+    // Case 2: Inserting at the head of the list.
+    if (pos == 1) {
         PutItemH(itemIn);
         return;
     }
-    if (pos == length) {
+
+    // Case 3: Inserting at the tail of the list.
+    if (pos == length + 1) {
         PutItemT(itemIn);
         return;
     }
 
-    // Out of Range
-    if (pos > length || pos < 0) {
+    // Case 4: Position is out of bounds.
+    // As per test case behavior, add to the tail.
+    if (pos <= 0 || pos > length) {
+        PutItemT(itemIn); 
         return;
     }
 
+    // Case 5: Inserting in the middle of the list.
+    node* cur = head;
+    // Traverse to the node *before* the insertion point.
+    for (int i = 1; i < pos - 1; i++) {
+        cur = cur->next;
+    }
+
+    node* newNode = new node;
+    newNode->item = itemIn;
+    newNode->next = cur->next;
+    cur->next = newNode;
+
     length++;
-    return;
 }
 
 bool List::IsEmpty() {
@@ -68,15 +96,7 @@ void List::Print() {
 }
 
 int List::GetLength() {
-    int len = 0;
-
-    node* cur = head;
-    while (cur != nullptr) {
-        len++;
-        cur = cur->next;
-    }
-    
-    return len;
+    return length;
 }
 
 void List::PutItemH(itemType itemIn) {
@@ -127,33 +147,91 @@ itemType List::GetItemT() {
 
 void List::DeleteItemH() {
     if (IsEmpty()) return;
-    if (head == nullptr) return;
 
     node* oldHead = head;
-    node* newHead = head->next;
-    head = newHead;
+    head = head->next;
     delete oldHead;
-
     length--;
+
+    // If the list is now empty, the tail must also be null.
+    if (IsEmpty()) {
+        tail = nullptr;
+    }
 }
 
 void List::DeleteItemT() {
     if (IsEmpty()) return;
     if (head == nullptr) return;
     if (tail == nullptr) return;
+    if (length == 1) {
+        DeleteItemH();
+        return;
+    }
 
     node* cur = head;
-    while (cur->next->next != nullptr) {
+    while (cur != nullptr) {
+        node* next = cur->next;
+        if (next == tail) {
+            cur->next = nullptr;
+            delete next;
+            tail = cur;
+            break;
+        }
+        cur = next;
+    }
+
+    length--;
+}
+
+int List::Find(itemType target) {
+    if (IsEmpty()) return 0;
+
+    int count = 0;
+    node* cur = head;
+    while (cur != nullptr) {
+        if (cur->item == target) {
+            count++;
+        }
         cur = cur->next;
     }
 
-    node* tailPrecedent = cur;
-    node* oldTail = tail;
-    if (tailPrecedent->next != tail) {
-        cout << "TROUBLE" << endl;
+    return count;
+}
+
+int List::DeleteItem(itemType target) {
+    if (IsEmpty()) return 0;
+
+    int numDeleted = 0;
+    node* prev = nullptr;
+    node* cur = head;
+
+    while (cur != nullptr) {
+        if (cur->item == target) {
+            node* nodeToDelete = cur;
+            // Case 1: Deleting the head node
+            if (prev == nullptr) { 
+                head = cur->next;
+                cur = head; // Move to the new head
+            } 
+            // Case 2: Deleting a middle or tail node
+            else {
+                prev->next = cur->next;
+                cur = cur->next; // Move to the next node
+            }
+
+            // If the deleted node was the tail, update the tail pointer
+            if (nodeToDelete == tail) {
+                tail = prev;
+            }
+
+            delete nodeToDelete;
+            length--;
+            numDeleted++;
+        } else {
+            // Move to the next node
+            prev = cur;
+            cur = cur->next;
+        }
     }
-    tailPrecedent->next = nullptr;
-    delete oldTail;
-    
-    length--;
+    return numDeleted;
 }
