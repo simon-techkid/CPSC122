@@ -12,8 +12,7 @@ ListD::ListD(ListD* lst) {
     InitializeVars();
     //returns a pointer to the first node, which is what we want here
     doubleNode* cur = lst->FindPosition(2);
-    for (int i = 1; i <= lst->length; i++)
-    {
+    for (int i = 1; i <= lst->length; i++) {
         Insert(cur->item,i);
         cur = cur->next;
     }
@@ -27,14 +26,14 @@ void ListD::InitializeVars() {
     tail = new doubleNode;
 
     //set values for head dummy node;
-    head->prev = NULL;
+    head->prev = nullptr;
     head->item = INT_MIN;
     head->next = tail;
 
     //set values for tail dummy node;
     tail->prev = head; 
     tail->item = INT_MAX;
-    tail->next = NULL;
+    tail->next = nullptr;
 }
 
 //how would you do this?
@@ -42,8 +41,7 @@ ListD::~ListD() {
     doubleNode* cur = head;
     doubleNode* tmp;
 
-    while (cur != NULL)
-    {
+    while (cur != nullptr) {
         tmp = cur;
         cur = cur->next;
         delete tmp;
@@ -58,8 +56,7 @@ doubleNode* ListD::FindPosition(int pos) {
 
     doubleNode* cur = head;
     int i = 0;  //begin at the dummy node
-    while (i < pos - 1)
-    {
+    while (i < pos - 1) {
         cur = cur->next;
         i++;
     }
@@ -88,8 +85,7 @@ void ListD::PrintForward() {
     doubleNode*  cur = head->next;
 
     int i = 0;
-    while (i < length)
-    {
+    while (i < length) {
         cout << cur->item << endl;
         cur = cur->next;
         i++;
