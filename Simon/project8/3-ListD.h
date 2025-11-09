@@ -73,7 +73,7 @@ public:
     pre:  ListD exists
     post: Nodes in the list are in ascending order.  The algorithm used
         to put nodes in order is selection sort. Use the functions, suitably altered, of course,
-    found here: .../C-Search-Sort/2-selectionSort.cpp 
+        found here: .../C-Search-Sort/2-selectionSort.cpp 
     */
     void Sort();
 

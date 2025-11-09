@@ -36,18 +36,6 @@ void ListD::InitializeVars() {
     tail->next = nullptr;
 }
 
-//how would you do this?
-ListD::~ListD() {
-    doubleNode* cur = head;
-    doubleNode* tmp;
-
-    while (cur != nullptr) {
-        tmp = cur;
-        cur = cur->next;
-        delete tmp;
-    }
-}
-
 doubleNode* ListD::FindPosition(int pos) {
     //Inserting at the tail is a special case.  It can be made much more efficient than
     //this.
@@ -82,12 +70,94 @@ void ListD::Insert(itemType item, int pos) {
 }
 
 void ListD::PrintForward() {
-    doubleNode*  cur = head->next;
+    if (head == nullptr) return;
+    doubleNode* cur = head->next;
 
     int i = 0;
     while (i < length) {
         cout << cur->item << endl;
         cur = cur->next;
         i++;
+    }
+}
+
+void ListD::PrintBackward() {
+    if (tail == nullptr) return;
+    doubleNode* cur = tail->prev;
+
+    int i = length;
+    while (i > 0) {
+        cout << cur->item << endl;
+        cur = cur->prev;
+        i--;
+    }
+}
+
+void ListD::Delete(int pos) {
+    if (pos < 1 || pos > length) return;
+
+    doubleNode* nodeToDelete = head->next;
+    
+    for (int i = 1; i < pos; i++) {
+        nodeToDelete = nodeToDelete->next;
+    }
+
+    nodeToDelete->prev->next = nodeToDelete->next;
+    nodeToDelete->next->prev = nodeToDelete->prev;
+
+    delete nodeToDelete;
+    length--;
+}
+
+ListD::~ListD() {
+    doubleNode* cur = head;
+    doubleNode* tmp;
+
+    while (cur != nullptr) {
+        tmp = cur;
+        cur = cur->next;
+        delete tmp;
+    }
+}
+
+int ListD::DeleteAll(itemType item) {
+    int numDeleted = 0;
+    doubleNode* cur = head->next;
+    int currentPos = 1;
+    
+    while (cur != tail) {
+        if (cur->item == item) {
+            cur = cur->next;
+            Delete(currentPos);
+            numDeleted++;
+        } else {
+            cur = cur->next;
+            currentPos++;
+        }
+    }
+
+    return numDeleted;
+}
+
+void ListD::Sort() {
+    if (length <= 1) return;
+
+    doubleNode* current = head->next;
+    while (current != tail) {
+        doubleNode* minNode = current;
+        doubleNode* runner = current->next;
+        while (runner != tail) {
+            if (runner->item < minNode->item) {
+                minNode = runner;
+            }
+            runner = runner->next;
+        }
+
+        if (minNode != current) {
+            itemType temp = current->item;
+            current->item = minNode->item;
+            minNode->item = temp;
+        }
+        current = current->next;
     }
 }

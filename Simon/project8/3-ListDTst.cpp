@@ -6,10 +6,18 @@ using namespace std;
 //All tests are controlled by a dedicated function
 void TestInsert();
 void TestCopyConstructor();
+void TestPrintBackward();
+void TestDelete();
+void TestDeleteAll();
+void TestSort();
 
 int main() {
-    // TestInsert();
+    TestInsert();
     TestCopyConstructor();
+    TestPrintBackward();
+    TestDelete();
+    TestDeleteAll();
+    TestSort();
 }
 
 void TestInsert() {
@@ -56,7 +64,99 @@ void TestCopyConstructor() {
     cout << endl;
     cout << "Traverse copy" << endl;
     lst2->PrintForward();
+    cout << endl;
 
     delete lst1;
     delete lst2;
+}
+
+void TestPrintBackward() {
+    ListD* lst1 = new ListD();
+    for (int i = 1; i <= 5; i++) {
+        lst1->Insert(i, i);
+    }
+
+    cout << "Forward:" << endl;
+    lst1->PrintForward();
+    cout << "Backward:" << endl; 
+    lst1->PrintBackward();
+    cout << endl;
+    delete lst1;
+}
+
+void TestDelete() {
+    cout << "--- Testing Delete ---" << endl;
+    ListD* lst = new ListD;
+    for (int i = 1; i <= 5; i++)
+        lst->Insert(i,i);
+
+    cout << "Original list:" << endl;
+    lst->PrintForward();
+    cout << endl;
+
+    cout << "Deleting from middle (pos 3, item 3):" << endl;
+    lst->Delete(3);
+    lst->PrintForward();
+    cout << endl;
+
+    cout << "Deleting from head (pos 1, item 1):" << endl;
+    lst->Delete(1);
+    lst->PrintForward();
+    cout << endl;
+
+    cout << "Deleting from tail (pos 3, item 5):" << endl;
+    lst->Delete(3);
+    lst->PrintForward();
+    cout << endl;
+    
+    delete lst;
+}
+
+void TestDeleteAll() {
+    cout << "--- Testing DeleteAll ---" << endl;
+    ListD* lst = new ListD;
+    lst->Insert(1,1);
+    lst->Insert(2,2);
+    lst->Insert(1,3);
+    lst->Insert(3,4);
+    lst->Insert(1,5);
+
+    cout << "Original list with duplicates of 1:" << endl;
+    lst->PrintForward();
+    cout << endl;
+
+    cout << "Deleting all 1s:" << endl;
+    int deletedCount = lst->DeleteAll(1);
+    cout << "Deleted " << deletedCount << " items. List should be 2, 3." << endl;
+    lst->PrintForward();
+    cout << endl;
+
+    cout << "Deleting item not in list (7):" << endl;
+    deletedCount = lst->DeleteAll(7);
+    cout << "Deleted " << deletedCount << " items. List should be unchanged." << endl;
+    lst->PrintForward();
+    cout << endl;
+
+    delete lst;
+}
+
+void TestSort() {
+    cout << "--- Testing Sort ---" << endl;
+    ListD* lst = new ListD;
+    lst->Insert(5,1);
+    lst->Insert(2,2);
+    lst->Insert(8,3);
+    lst->Insert(1,4);
+    lst->Insert(9,5);
+
+    cout << "Unsorted list:" << endl;
+    lst->PrintForward();
+    cout << endl;
+
+    cout << "Sorted list (should be 1, 2, 5, 8, 9):" << endl;
+    lst->Sort();
+    lst->PrintForward();
+    cout << endl;
+
+    delete lst;
 }
