@@ -20,8 +20,20 @@ int main() {
     TestSort();
 }
 
+typedef int itemType;
+
+template<>
+int ListD<int>::GetDefaultHead() {
+    return INT_MIN;
+}
+
+template<>
+int ListD<int>::GetDefaultTail() {
+    return INT_MAX;
+}
+
 void TestInsert() {
-    ListD* lst = new ListD;
+    ListD<itemType>* lst = new ListD<itemType>;
     for (int i = 1; i <= 5; i++)
         lst->Insert(i,i);
 
@@ -32,33 +44,33 @@ void TestInsert() {
 
     cout << "test insert at the head" << endl;
     lst->Insert(0,1);
-    cout << "Passed Insert Test 2 if 0 appears in position 1" << endl; 
+    cout << "Passed Insert Test 2 if 0 appears in position 1" << endl;
     lst->PrintForward();
     cout << endl;
 
-    cout << "test insert at the tail" << endl; 
+    cout << "test insert at the tail" << endl;
     lst->Insert(100,7);
-    cout << "Passed Insert Test 3 if 100 appears in final position" << endl; 
+    cout << "Passed Insert Test 3 if 100 appears in final position" << endl;
     lst->PrintForward();
     cout << endl;
 
-    cout << "test insert within the list" << endl; 
+    cout << "test insert within the list" << endl;
     lst->Insert(50,5);
-    cout << "Passed Insert Test 4 if 50 appears in the fifth position" << endl; 
+    cout << "Passed Insert Test 4 if 50 appears in the fifth position" << endl;
     lst->PrintForward();
     cout << endl;
     delete lst;
 }
 
 void TestCopyConstructor() {
-    ListD* lst1 = new ListD();
+    ListD<itemType>* lst1 = new ListD<itemType>();
     for (int i = 1; i <= 3; i++)
         lst1->Insert(i,i);
 
-    ListD* lst2 = new ListD(lst1);
+    ListD<itemType>* lst2 = new ListD<itemType>(lst1);
 
-    cout << "Test Copy Constructor" << endl; 
-    cout << "Test passed if copy is indentical to initial list" << endl; 
+    cout << "Test Copy Constructor" << endl;
+    cout << "Test passed if copy is indentical to initial list" << endl;
     cout << "Traverse inital list" << endl;
     lst1->PrintForward();
     cout << endl;
@@ -71,14 +83,14 @@ void TestCopyConstructor() {
 }
 
 void TestPrintBackward() {
-    ListD* lst1 = new ListD();
+    ListD<itemType>* lst1 = new ListD<itemType>();
     for (int i = 1; i <= 5; i++) {
         lst1->Insert(i, i);
     }
 
     cout << "Forward:" << endl;
     lst1->PrintForward();
-    cout << "Backward:" << endl; 
+    cout << "Backward:" << endl;
     lst1->PrintBackward();
     cout << endl;
     delete lst1;
@@ -86,7 +98,7 @@ void TestPrintBackward() {
 
 void TestDelete() {
     cout << "--- Testing Delete ---" << endl;
-    ListD* lst = new ListD;
+    ListD<itemType>* lst = new ListD<itemType>;
     for (int i = 1; i <= 5; i++)
         lst->Insert(i,i);
 
@@ -108,13 +120,13 @@ void TestDelete() {
     lst->Delete(3);
     lst->PrintForward();
     cout << endl;
-    
+
     delete lst;
 }
 
 void TestDeleteAll() {
     cout << "--- Testing DeleteAll ---" << endl;
-    ListD* lst = new ListD;
+    ListD<itemType>* lst = new ListD<itemType>;
     lst->Insert(1,1);
     lst->Insert(2,2);
     lst->Insert(1,3);
@@ -142,7 +154,7 @@ void TestDeleteAll() {
 
 void TestSort() {
     cout << "--- Testing Sort ---" << endl;
-    ListD* lst = new ListD;
+    ListD<itemType>* lst = new ListD<itemType>;
     lst->Insert(5,1);
     lst->Insert(2,2);
     lst->Insert(8,3);
