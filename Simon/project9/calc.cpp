@@ -2,7 +2,11 @@
 using namespace std;
 
 #include "calc.h"
+#include "list.h"
 #include <cstring>
+
+#define VALUE_TABLE_SIZE 26
+#define TEST false
 
 //Write functions in this order.  Constructor and destructor will be built as the
 //functions it invokes are written
@@ -19,17 +23,22 @@ Calc::Calc(char* argvIn) {
     inFix = new char[inFixLen + 1];
     strcpy(inFix, argvIn);
 
-    if (CheckTokens() == false) {
+    if (!CheckTokens()) {
         cout << "Error: Invalid token in expression." << endl;
         exit(EXIT_FAILURE);
     }
 
-    if (CheckParens() == false) {
+    if (!CheckParens()) {
         cout << "Error: Unbalanced parentheses in expression." << endl;
         exit(EXIT_FAILURE);
     }
     
+    if (TEST) DisplayInFix();
+
     MakeValueTbl();
+    Parse();
+
+    if (TEST) DisplayInFix();
 
     stk = new Stack();
 }
@@ -85,7 +94,7 @@ bool Calc::CheckTokens() {
     for (int i = 0; i < inFixLen; i++) {
         char ch = inFix[i];
         if (!(
-            (ch >= OPERATORS::ADD && ch <= OPERATORS::DIV) ||
+            (ch >= OPERATORS::MUL && ch <= OPERATORS::DIV) ||
             (ch >= LETTERS::A && ch <= LETTERS::Z) ||
             (ch >= NUMBERS::ZERO && ch <= NUMBERS::NINE) ||
             (ch == PARENTHESES::LEFT_PAREN || ch == PARENTHESES::RIGHT_PAREN)
@@ -98,15 +107,56 @@ bool Calc::CheckTokens() {
 }
 
 void Calc::MakeValueTbl() {
-    valueTbl = new int[26];
+    valueTbl = new int[VALUE_TABLE_SIZE];
     valueIdx = 0;
-    for (int i = 0; i < 26; ++i) {
+    for (int i = 0; i < VALUE_TABLE_SIZE; ++i) {
         valueTbl[i] = 0;
     }
 }
 
 void Calc::Parse() {
+    if (inFix == nullptr) return;
 
+    char* items = new char[inFixLen + 1];
+    int itemsIdx = 0;
+
+    for (int i = 0; i < inFixLen; ) {
+        char ch = inFix[i];
+
+        if (ch < NUMBERS::ZERO || ch > NUMBERS::NINE) {
+            items[itemsIdx++] = ch;
+            i++;
+            continue;
+        }
+
+        char* endPtr;
+        int value = strtol(&inFix[i], &endPtr, 10);
+        int length = endPtr - &inFix[i];
+        
+        valueTbl[valueIdx] = value;
+        char varChar = 'A' + valueIdx;
+        items[itemsIdx++] = varChar;
+        valueIdx++;
+        
+        i += length;
+    }
+    items[itemsIdx] = '\0'; // Null-terminate the new string
+
+    if (TEST) {
+        cout << items << endl;
+
+        for (int i = 0; i < valueIdx; i++) {
+            char varChar = 'A' + i;
+            cout << varChar << ": " << valueTbl[i] << endl;
+        }
+        cout << endl;
+    }
+
+    delete[] inFix;
+    inFix = items;
+    inFixLen = itemsIdx;
+
+    return;
 }
 
 bool Calc::CheckParens() {
