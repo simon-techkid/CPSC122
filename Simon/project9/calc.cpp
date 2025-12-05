@@ -17,10 +17,7 @@ Calc::Calc(char* argvIn) {
         exit(EXIT_FAILURE);
     }
 
-    int strLen = strlen(argvIn);
-    inFixLen = strLen;
-
-    inFix = new char[inFixLen + 1];
+    inFix = new char[strlen(argvIn) + 1];
     strcpy(inFix, argvIn);
 
     if (!CheckTokens()) {
@@ -81,23 +78,20 @@ enum NUMBERS : char {
     NINE = '9'
 };
 
-// Upper case letters A-Z
-// (ASCII values between 65 and 90)
-enum LETTERS : char {
-    A = 'A',
-    Z = 'Z'
-};
-
 bool Calc::CheckTokens() {
     if (inFix == nullptr) return false;
 
     for (int i = 0; i < inFixLen; i++) {
         char ch = inFix[i];
         if (!(
-            (ch >= OPERATORS::MUL && ch <= OPERATORS::DIV) ||
-            (ch >= LETTERS::A && ch <= LETTERS::Z) ||
-            (ch >= NUMBERS::ZERO && ch <= NUMBERS::NINE) ||
-            (ch == PARENTHESES::LEFT_PAREN || ch == PARENTHESES::RIGHT_PAREN)
+            (ch >= OPERATORS::MUL) ||
+            (ch == OPERATORS::ADD) ||
+            (ch == OPERATORS::SUB) ||
+            (ch == OPERATORS::DIV) ||
+            (isalpha(ch) && isupper(ch)) ||
+            (isdigit(ch)) ||
+            (ch == PARENTHESES::LEFT_PAREN) ||
+            (ch == PARENTHESES::RIGHT_PAREN)
         )) {
             return false;
         }
