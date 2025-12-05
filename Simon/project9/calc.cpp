@@ -88,10 +88,10 @@ bool Calc::CheckTokens() {
             (ch == OPERATORS::ADD) ||
             (ch == OPERATORS::SUB) ||
             (ch == OPERATORS::DIV) ||
-            (isalpha(ch) && isupper(ch)) ||
-            (isdigit(ch)) ||
             (ch == PARENTHESES::LEFT_PAREN) ||
-            (ch == PARENTHESES::RIGHT_PAREN)
+            (ch == PARENTHESES::RIGHT_PAREN) ||
+            (isalpha(ch) && isupper(ch)) ||
+            (isdigit(ch))
         )) {
             return false;
         }
